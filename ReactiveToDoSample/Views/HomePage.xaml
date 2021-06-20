@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<rxui:ReactiveContentPage
+    x:Class="ReactiveToDoSample.Views.HomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+    xmlns:vm="clr-namespace:ReactiveToDoSample.ViewModels"
+    x:Name="homePage"
+    Title="Reactive ToDo"
+    x:TypeArguments="vm:HomeViewModel">
+    <StackLayout Padding="20">
+    <CollectionView
+        ItemsSource="{Binding Items}"
+        SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+        SelectionMode="Single">
+         <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame Style="{StaticResource CardFrameStyle}">
+                     <Frame.Triggers>
+                        <DataTrigger TargetType="Frame"
+                                        Binding="{Binding IsCompleted}"
+                                        Value="True">
+                            <Setter Property="Opacity" Value="0.2" />
+                        </DataTrigger>
+                    </Frame.Triggers>
+                    <StackLayout Orientation="Horizontal">
+                         <CheckBox IsChecked="{Binding IsCompleted}"/>
+                         <Label Text="{Binding Title}"
+                                HorizontalOptions="FillAndExpand"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"/>
+
+                        <Label Text="🗑"
+                               VerticalOptions="EndAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference homePage}, Path=BindingContext.DeleteCommand}"
+                                                      CommandParameter="{Binding}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+              </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+       <Button Style="{StaticResource CircularButtonStyle}"
+                Command="{Binding AddCommand}"
+                Text="+"/>
+    </StackLayout>
+</rxui:ReactiveContentPage>

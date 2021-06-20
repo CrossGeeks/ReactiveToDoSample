@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<rxui:ReactiveContentPage
+    x:Class="ReactiveToDoSample.Views.ItemPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+    xmlns:vm="clr-namespace:ReactiveToDoSample.ViewModels"
+    x:TypeArguments="vm:ItemViewModel">
+    <rxui:ReactiveContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding CloseCommand}" Text="Close" />
+    </rxui:ReactiveContentPage.ToolbarItems>
+    <StackLayout>
+        <Label Text="Item"
+               FontSize="Title"
+               Padding="20"
+               HorizontalOptions="Center"/>
+        <Frame Style="{StaticResource CardFrameStyle}"
+               Margin="10"
+               VerticalOptions="Start">
+            <StackLayout
+                HorizontalOptions="FillAndExpand">
+                <Entry Placeholder="Title"
+                       Text="{Binding Title}" />
+                <Button Command="{Binding SaveCommand}"
+                        Style="{StaticResource MainButtonStyle}"
+                        Text="Save"/>
+            </StackLayout>
+        </Frame>
+   </StackLayout>
+</rxui:ReactiveContentPage>
